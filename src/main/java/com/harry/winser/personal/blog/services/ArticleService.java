@@ -1,8 +1,8 @@
 package com.harry.winser.personal.blog.services;
 
-import java.util.List;
-
 public interface ArticleService {
+
+    Article getArticleByName(String name);
 
     ArticleDto getAllArticles();
 
