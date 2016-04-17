@@ -2,6 +2,7 @@ package com.harry.winser.personal.blog.services;
 
 import com.google.common.collect.Lists;
 import com.harry.winser.personal.blog.services.client.ArticleClient;
+import com.harry.winser.personal.blog.services.client.ArticleType;
 import com.harry.winser.personal.blog.web.exceptions.InternalServerErrorException;
 import com.harry.winser.personal.blog.web.exceptions.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,11 +47,16 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public ArticleDto getAllArticles() {
 
-        ArticleDto reviews = this.articleClient.findByType("review");
-        ArticleDto blogs = this.articleClient.findByType("blog");
+        try{
+            ArticleDto reviews = this.articleClient.findByType(ArticleType.REVIEW.toString());
+            ArticleDto blogs = this.articleClient.findByType(ArticleType.BLOG.toString());
 
+            return this.mergeArticleDtos(reviews, blogs);
+        }catch(HttpClientErrorException | HttpServerErrorException ex){
 
-        return this.mergeArticleDtos(reviews, blogs);
+            //todo logging
+            throw new InternalServerErrorException("Something went wrong contact the Api service. It returned a " + ex.getStatusCode() + " status code.");
+        }
     }
 
     private ArticleDto mergeArticleDtos(ArticleDto first, ArticleDto second){
@@ -66,9 +72,10 @@ public class ArticleServiceImpl implements ArticleService {
         result.setTotalPages(first.getTotalPages() + second.getTotalPages());
         result.setTotalElements(first.getTotalElements() + second.getTotalElements());
         result.setNumberOfElements(articles.size());
-        result.setFirst(first.getFirst() || second.getFirst() ? true : false);
-        result.setLast(first.getLast() && second.getLast() ? true : false);
+        result.setFirst(first.getFirst() || second.getFirst());
+        result.setLast(first.getLast() && second.getLast());
         result.setNumber(first.getNumber() <= second.getNumber() ? first.getNumber() : second.getNumber());
+        result.setSize(first.getSize());
 
         return result;
     }

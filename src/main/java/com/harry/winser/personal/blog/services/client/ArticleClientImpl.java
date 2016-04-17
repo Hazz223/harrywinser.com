@@ -42,7 +42,12 @@ public class ArticleClientImpl implements ArticleClient {
     @Override
     public ArticleDto findByType(String type) {
 
+        ResponseEntity<ArticleDto> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article/type/%s", host, port, type), ArticleDto.class);
 
-        return null;
+        if(articleEntity.getStatusCode() != HttpStatus.OK){
+            throw new HttpClientErrorException(articleEntity.getStatusCode(), "Unexpected status code returned");
+        }
+
+        return articleEntity.getBody();
     }
 }
