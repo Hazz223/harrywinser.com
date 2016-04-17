@@ -1,19 +1,28 @@
 # harrywinser.com
-My personal website. Rebuilt, and now open source!
+My personal website; rebuilt and fully opensource!
 
-This was originally hosted on visualstudio.com, but decided it was time to move it and reboot it.  The front end on the current harrywinser.com is pretty ugly, and this project aims to improve it.
+Started to get super annoyed when using VisualStudio.com to host the git repo, so I'm restarting from here.
+Also, now i don't have a reliance on the database directly, it's much easier to share the code.
 
-I also hope to ensure that everything written here is configurable, so that anyone can take the code, and  with little modification use the same template for a backend; so same api etc. You could remove the frontend entirely / replace it with your own!
+This site will be hosting my blog posts and reviews. Not technical stuff. That can be found at
+tech.harrywinser.com, though i will link through from here.
 
-Technical writing will no longer be hosted on this site, but instead on tech.harrywinser.com. That is still available on git hub, but I won't be planning to make that generic.
+Happy reading!
 
 ## Technology Stack
 - SpringBoot as Server framework
 - Mustache as the templating engine
-- Knockout.js as the frontend framework.
-- Relational database to store the content. (I'll post the schema, which will can be found under SQL folder)
+- Knockout.js as the frontend framework. Soon to be more once i get around to learning stuff.
+- Data comes from api.harrywinser.com. No access to the Database, because it doesn't need to!
 
 ## Plan
-- Recreation of the current site (harrywinser.com), but with a new front end
-- More consistent and understandable API, with docs (which will be found at tech.harrywinser.com)
-- MOAR BLOG CONTENT!
+- Recreate harrywinser.com, and use the api available from api.harrywinser.com
+- Build a better looking frontend. Use more advanced tech (this is a future goal!)
+
+## Build / running
+- Ensure you have Java 8 installed
+- Go to the cloned directory, and type in `./gradlew bootRepackage`. This will create a deployable Jar in folder `build/libs`.
+- use `java -jar <insert jar name here>`. This should boot the app locally under port 80. Note, if you're on a Mac or Linux, they
+tend to block port 80. Dive into the `application.properties` to change this. More docs can be found on the Springboot website.
+
+
