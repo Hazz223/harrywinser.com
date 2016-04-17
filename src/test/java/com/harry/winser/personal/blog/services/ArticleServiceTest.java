@@ -2,9 +2,7 @@ package com.harry.winser.personal.blog.services;
 
 
 import com.github.tomakehurst.wiremock.junit.WireMockRule;
-import com.harry.winser.personal.blog.services.client.ArticleClient;
-import com.harry.winser.personal.blog.services.client.ArticleClientImpl;
-import com.harry.winser.personal.blog.services.client.ArticleType;
+import com.harry.winser.personal.blog.services.client.*;
 import com.harry.winser.personal.blog.web.exceptions.InternalServerErrorException;
 import com.harry.winser.personal.blog.web.exceptions.NotFoundException;
 import org.apache.commons.io.IOUtil;
@@ -132,7 +130,7 @@ public class ArticleServiceTest {
                         .withStatus(200)
                         .withBody(this.loadResource(ARTICLES_REVIEW_JSON))));
 
-        ArticleDto allArticles = this.articleService.getAllArticles();
+        ArticleContainer allArticles = this.articleService.getAllArticles();
 
         assertThat(allArticles.getContent().size()).isEqualTo(2);
 
@@ -169,7 +167,7 @@ public class ArticleServiceTest {
                         .withStatus(200)
                         .withBody(this.loadResource(NO_ARTICLES_JSON))));
 
-        ArticleDto allArticles = this.articleService.getAllArticles();
+        ArticleContainer allArticles = this.articleService.getAllArticles();
 
         assertThat(allArticles.getContent().size()).isEqualTo(0);
         assertThat(allArticles.getNumber()).isEqualTo(0);

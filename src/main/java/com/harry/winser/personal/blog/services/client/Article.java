@@ -1,4 +1,4 @@
-package com.harry.winser.personal.blog.services;
+package com.harry.winser.personal.blog.services.client;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

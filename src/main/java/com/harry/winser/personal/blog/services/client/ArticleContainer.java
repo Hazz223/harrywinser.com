@@ -1,12 +1,11 @@
-package com.harry.winser.personal.blog.services;
+package com.harry.winser.personal.blog.services.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ArticleDto {
+public class ArticleContainer {
 
     private List<Article> content;
     private Integer totalElements;

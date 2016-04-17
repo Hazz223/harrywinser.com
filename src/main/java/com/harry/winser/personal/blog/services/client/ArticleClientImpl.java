@@ -1,14 +1,11 @@
 package com.harry.winser.personal.blog.services.client;
 
-import com.harry.winser.personal.blog.services.Article;
-import com.harry.winser.personal.blog.services.ArticleDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 @Component
@@ -40,9 +37,9 @@ public class ArticleClientImpl implements ArticleClient {
     }
 
     @Override
-    public ArticleDto findByType(String type) {
+    public ArticleContainer findByType(String type) {
 
-        ResponseEntity<ArticleDto> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article/type/%s", host, port, type), ArticleDto.class);
+        ResponseEntity<ArticleContainer> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article/type/%s", host, port, type), ArticleContainer.class);
 
         if(articleEntity.getStatusCode() != HttpStatus.OK){
             throw new HttpClientErrorException(articleEntity.getStatusCode(), "Unexpected status code returned");

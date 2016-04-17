@@ -1,7 +1,8 @@
 package com.harry.winser.personal.blog.services;
 
-import com.google.common.collect.Lists;
+import com.harry.winser.personal.blog.services.client.Article;
 import com.harry.winser.personal.blog.services.client.ArticleClient;
+import com.harry.winser.personal.blog.services.client.ArticleContainer;
 import com.harry.winser.personal.blog.services.client.ArticleType;
 import com.harry.winser.personal.blog.web.exceptions.InternalServerErrorException;
 import com.harry.winser.personal.blog.web.exceptions.NotFoundException;
@@ -11,19 +12,17 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
     private ArticleClient articleClient;
+    private ArticleContainerMerger articleContainerMerger;
 
     @Autowired
     public ArticleServiceImpl(ArticleClient articleClient) {
 
         this.articleClient = articleClient;
+        this.articleContainerMerger = new ArticleContainerMerger();
     }
 
     @Override
@@ -45,13 +44,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleDto getAllArticles() {
+    public ArticleContainer getAllArticles() {
 
         try{
-            ArticleDto reviews = this.articleClient.findByType(ArticleType.REVIEW.toString());
-            ArticleDto blogs = this.articleClient.findByType(ArticleType.BLOG.toString());
+            ArticleContainer reviews = this.articleClient.findByType(ArticleType.REVIEW.toString());
+            ArticleContainer blogs = this.articleClient.findByType(ArticleType.BLOG.toString());
 
-            return this.mergeArticleDtos(reviews, blogs);
+            return this.articleContainerMerger.merge(reviews, blogs);
         }catch(HttpClientErrorException | HttpServerErrorException ex){
 
             //todo logging
@@ -59,24 +58,5 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-    private ArticleDto mergeArticleDtos(ArticleDto first, ArticleDto second){
 
-        List<Article> firstContent = first.getContent();
-        List<Article> secondContent = second.getContent();
-        List<Article> articles = new ArrayList<>();
-        articles.addAll(firstContent);
-        articles.addAll(secondContent);
-
-        ArticleDto result = new ArticleDto();
-        result.setContent(articles);
-        result.setTotalPages(first.getTotalPages() + second.getTotalPages());
-        result.setTotalElements(first.getTotalElements() + second.getTotalElements());
-        result.setNumberOfElements(articles.size());
-        result.setFirst(first.getFirst() || second.getFirst());
-        result.setLast(first.getLast() && second.getLast());
-        result.setNumber(first.getNumber() <= second.getNumber() ? first.getNumber() : second.getNumber());
-        result.setSize(first.getSize());
-
-        return result;
-    }
 }
