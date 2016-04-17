@@ -1,0 +1,21 @@
+body{
+    font-family: 'Lato', sans-serif;
+}
+
+.title__h1{
+    font-size: 150px;
+}
+
+.content__container{
+    width: 750px;
+    font-size: 15px;
+}
+
+.content__header{
+    font-size: 45px;
+    text-align: center;
+}
+
+.content__data{
+    font-size: 18px;
+}
