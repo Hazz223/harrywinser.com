@@ -12,8 +12,13 @@ body{
 
 .content__container{
     width: 750px;
-    font-size: 15px;
+    font-size: 18px;
     margin: 0 auto;
+    margin-bottom: 60px;
+}
+
+.content__date__container{
+    text-align: center;
 }
 
 .content__header{
@@ -23,6 +28,16 @@ body{
 
 .content__data{
     font-size: 18px;
+}
+
+.content__anchor{
+    text-decoration: none;
+    color: black;
+}
+
+.content__anchor:hover{
+    text-decoration: underline;
+    color: black;
 }
 
 .navbar__container{

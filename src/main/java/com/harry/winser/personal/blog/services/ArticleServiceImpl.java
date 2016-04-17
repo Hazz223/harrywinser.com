@@ -58,5 +58,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
+    // This needs proper testing
+    @Override
+    public ArticleContainer getArticleByType(ArticleType type) {
+        return this.articleClient.findByType(type.toString());
+    }
+
 
 }
