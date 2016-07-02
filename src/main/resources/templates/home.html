@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-    {{> generic/header}}
+{{> generic/header}}
 <body>
 
 <div class="container">
 
-
     {{> generic/navbar}}
 
-        {{#content}}
+    {{#content}}
     <div class="row content__container">
-        <h2 class="content__header"> <a href="/article/{{cleanTitle}}" class="content__anchor">{{title}}</a></h2>
+        <h2 class="content__header"><a href="/article/{{cleanTitle}}" class="content__anchor">{{title}}</a></h2>
         <div class="col-sm-12">
             {{{data}}}
         </div>
         <div class="content__date__container">Posted on {{date}}</div>
     </div>
-        {{/content}}
-</div>
+    {{/content}}
 
+    {{> generic/footer}}
 </div>
 
 <script src="/lib/jquery/jquery-1.12.3.min.js"></script>

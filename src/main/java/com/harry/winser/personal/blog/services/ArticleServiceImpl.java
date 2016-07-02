@@ -47,10 +47,9 @@ public class ArticleServiceImpl implements ArticleService {
     public ArticleContainer getAllArticles() {
 
         try{
-            ArticleContainer reviews = this.articleClient.findByType(ArticleType.REVIEW.toString());
-            ArticleContainer blogs = this.articleClient.findByType(ArticleType.BLOG.toString());
+            ArticleContainer all = this.articleClient.findAll();
 
-            return this.articleContainerMerger.merge(reviews, blogs);
+            return all;
         }catch(HttpClientErrorException | HttpServerErrorException ex){
 
             //todo logging
@@ -58,11 +57,9 @@ public class ArticleServiceImpl implements ArticleService {
         }
     }
 
-    // This needs proper testing
     @Override
     public ArticleContainer getArticleByType(ArticleType type) {
         return this.articleClient.findByType(type.toString());
     }
-
 
 }

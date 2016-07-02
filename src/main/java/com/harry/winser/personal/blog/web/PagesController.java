@@ -52,4 +52,10 @@ public class PagesController {
         return "home";
     }
 
+    @RequestMapping("/about")
+    public String about( Map<String, Object> model){
+
+        return "about";
+    }
+
 }

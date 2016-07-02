@@ -47,7 +47,7 @@ body{
 .navbar .navbar-nav {
     display: inline-block;
     float: none;
-}
+}clouds = {WeatherData$Clouds@1893}
 
 .navbar .navbar-collapse {
     text-align: center;
@@ -89,4 +89,20 @@ body{
     height: 300px;
     width: 500px;
     margin: 0 auto;
+}
+
+.social-network-buttons__container{
+}
+
+.social-network-buttons{
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 200px;
+}
+
+.references__container{
+    font-style: italic;
+    font-size: 0.7em;
+    margin-top: 30px;
+    text-align: center;
 }
