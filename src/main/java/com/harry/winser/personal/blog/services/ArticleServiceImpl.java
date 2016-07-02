@@ -38,7 +38,6 @@ public class ArticleServiceImpl implements ArticleService {
                 throw new NotFoundException("Could not find Article with name: " + name);
             }
 
-            // Todo: add proper logging!!
             throw new InternalServerErrorException("Something went wrong contact the Api service. It returned a " + statusCode + " status code.");
         }
     }
