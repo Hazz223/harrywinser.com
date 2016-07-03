@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class ArticleServiceImpl implements ArticleService {
 
@@ -43,10 +46,17 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public ArticleContainer getAllArticles() {
+    public ArticleContainer getBlogAndReviews() {
 
         try{
+
             ArticleContainer all = this.articleClient.findAll();
+
+            List<Article> blogAndReviews = all.getContent().stream()
+                    .filter(x -> !x.getType().equals("technology"))
+                    .collect(Collectors.toList());
+
+            all.setContent(blogAndReviews);
 
             return all;
         }catch(HttpClientErrorException | HttpServerErrorException ex){

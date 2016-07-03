@@ -8,7 +8,7 @@ public interface ArticleService {
 
     Article getArticleByName(String name);
 
-    ArticleContainer getAllArticles();
+    ArticleContainer getBlogAndReviews();
 
     ArticleContainer getArticleByType(ArticleType articleType);
 

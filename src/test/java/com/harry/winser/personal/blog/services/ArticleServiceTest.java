@@ -130,7 +130,7 @@ public class ArticleServiceTest {
                         .withStatus(200)
                         .withBody(this.loadResource(ARTICLES_REVIEW_JSON))));
 
-        ArticleContainer allArticles = this.articleService.getAllArticles();
+        ArticleContainer allArticles = this.articleService.getBlogAndReviews();
 
         assertThat(allArticles.getContent().size()).isEqualTo(2);
 
@@ -167,7 +167,7 @@ public class ArticleServiceTest {
                         .withStatus(200)
                         .withBody(this.loadResource(NO_ARTICLES_JSON))));
 
-        ArticleContainer allArticles = this.articleService.getAllArticles();
+        ArticleContainer allArticles = this.articleService.getBlogAndReviews();
 
         assertThat(allArticles.getContent().size()).isEqualTo(0);
         assertThat(allArticles.getNumber()).isEqualTo(0);
@@ -196,7 +196,7 @@ public class ArticleServiceTest {
                         .withBody(this.loadResource(NO_ARTICLES_JSON))));
 
         try{
-            this.articleService.getAllArticles();
+            this.articleService.getBlogAndReviews();
             assertTrue("Should not get here!", false);
         }catch(InternalServerErrorException ex){
             assertThat(ex.getCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -219,7 +219,7 @@ public class ArticleServiceTest {
                         .withBody(this.loadResource(NO_ARTICLES_JSON))));
 
         try{
-            this.articleService.getAllArticles();
+            this.articleService.getBlogAndReviews();
             assertTrue("Should not get here!", false);
         }catch(InternalServerErrorException ex){
             assertThat(ex.getCode()).isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);

@@ -19,7 +19,7 @@ public class PagesController {
     @RequestMapping("/")
     public String home(Map<String, Object> model){
 
-        model.put("content", this.articleService.getAllArticles().getContent());
+        model.put("content", this.articleService.getBlogAndReviews().getContent());
 
         return "home";
     }
