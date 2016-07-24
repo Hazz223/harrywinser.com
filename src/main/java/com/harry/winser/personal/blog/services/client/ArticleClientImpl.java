@@ -51,7 +51,7 @@ public class ArticleClientImpl implements ArticleClient {
     @Override
     public ArticleContainer findAll() {
 
-        ResponseEntity<ArticleContainer> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article?search&page=0&limit=1000", host, port), ArticleContainer.class);
+        ResponseEntity<ArticleContainer> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article?search&page=0&size=1000", host, port), ArticleContainer.class);
 
         if(articleEntity.getStatusCode() != HttpStatus.OK){
             throw new HttpClientErrorException(articleEntity.getStatusCode(), "Unexpected status code returned");
