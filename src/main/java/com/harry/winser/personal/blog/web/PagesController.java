@@ -1,9 +1,12 @@
 package com.harry.winser.personal.blog.web;
 
 import com.harry.winser.personal.blog.services.ArticleService;
+import com.harry.winser.personal.blog.services.CacheService;
 import com.harry.winser.personal.blog.services.client.Article;
 import com.harry.winser.personal.blog.services.client.ArticleType;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.Cache;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +18,8 @@ public class PagesController {
 
     @Autowired
     private ArticleService articleService;
+    @Autowired
+    private CacheService cacheService;
 
     @RequestMapping("/")
     public String home(Map<String, Object> model){
@@ -53,9 +58,17 @@ public class PagesController {
     }
 
     @RequestMapping("/about")
-    public String about( Map<String, Object> model){
+    public String about(){
 
         return "about";
+    }
+
+    @RequestMapping("/_clearCache")
+    public String clearCache(){
+
+        this.cacheService.clearCache();
+
+        return "clearCache";
     }
 
 }

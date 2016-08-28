@@ -2,6 +2,7 @@ package com.harry.winser.personal.blog.services.client;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
@@ -37,7 +38,9 @@ public class ArticleClientImpl implements ArticleClient {
     }
 
     @Override
+    @Cacheable("findByType")
     public ArticleContainer findByType(String type) {
+        System.out.println("Not cached yet");
 
         ResponseEntity<ArticleContainer> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article/type/%s", host, port, type), ArticleContainer.class);
 
@@ -49,6 +52,7 @@ public class ArticleClientImpl implements ArticleClient {
     }
 
     @Override
+    @Cacheable("findAll")
     public ArticleContainer findAll() {
 
         ResponseEntity<ArticleContainer> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article?search&page=0&size=1000", host, port), ArticleContainer.class);
