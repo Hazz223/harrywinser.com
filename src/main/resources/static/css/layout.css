@@ -1,5 +1,6 @@
 body{
     font-family: 'Lato', sans-serif;
+    background-color: #f1f1f1;
 }
 
 .title__container{
@@ -11,10 +12,14 @@ body{
 }
 
 .content__container{
-    width: 750px;
+    width: 800px;
     font-size: 18px;
+    background: #ffffff;
     margin: 0 auto;
     margin-bottom: 60px;
+    -webkit-box-shadow: 2px 2px 5px 0px #e5e5e5;
+    -moz-box-shadow: 2px 2px 5px 0px #e5e5e5;
+    box-shadow: 2px 2px 5px 0px #e5e5e5;
 }
 
 .content__date__container{
