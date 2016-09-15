@@ -28,7 +28,8 @@ public class ArticleClientImpl implements ArticleClient {
     @Override
     public Article findByName(String name) {
 
-        ResponseEntity<Article> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article/%s", host, port, name), Article.class);
+        ResponseEntity<Article> articleEntity =
+                this.sendRequest(String.format("%s:%s/article/%s", host, port, name), Article.class);
 
         if(articleEntity.getStatusCode() != HttpStatus.OK){
             throw new HttpClientErrorException(articleEntity.getStatusCode(), "Unexpected status code returned");
@@ -42,7 +43,8 @@ public class ArticleClientImpl implements ArticleClient {
     public ArticleContainer findByType(String type) {
         System.out.println("Not cached yet");
 
-        ResponseEntity<ArticleContainer> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article/type/%s", host, port, type), ArticleContainer.class);
+        ResponseEntity<ArticleContainer> articleEntity =
+                this.sendRequest(String.format("%s:%s/article/type/%s", host, port, type), ArticleContainer.class);
 
         if(articleEntity.getStatusCode() != HttpStatus.OK){
             throw new HttpClientErrorException(articleEntity.getStatusCode(), "Unexpected status code returned");
@@ -55,12 +57,20 @@ public class ArticleClientImpl implements ArticleClient {
     @Cacheable("findAll")
     public ArticleContainer findAll() {
 
-        ResponseEntity<ArticleContainer> articleEntity = restTemplate.getForEntity(String.format("%s:%s/article?search&page=0&size=1000", host, port), ArticleContainer.class);
+
+        ResponseEntity<ArticleContainer> articleEntity =
+                this.sendRequest(String.format("%s:%s/article?search&page=0&size=1000", host, port), ArticleContainer.class);
 
         if(articleEntity.getStatusCode() != HttpStatus.OK){
             throw new HttpClientErrorException(articleEntity.getStatusCode(), "Unexpected status code returned");
         }
 
         return articleEntity.getBody();
+    }
+
+    private ResponseEntity sendRequest(String url, Class containerClass) {
+
+        return this.restTemplate.getForEntity(url, containerClass);
+
     }
 }

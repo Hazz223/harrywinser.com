@@ -27,9 +27,8 @@ public class ArticleServiceTest {
     private static final String PORT = "9001";
     private static final String POKEDEX = "Pokedex";
     private static final String ARTICLE_JSON = "Article.json";
-    private static final String ARTICLES_REVIEW_JSON = "Articles-review.json";
-    private static final String ARTICLES_BLOG_JSON = "Articles-blog.json";
-    public static final String NO_ARTICLES_JSON = "No-articles.json";
+    private static final String ARTICLES_JSON = "Articles.json";
+    private static final String NO_ARTICLES_JSON = "No-articles.json";
 
     private ArticleClient client = new ArticleClientImpl(LOCALHOST, PORT, new RestTemplate());
     private ArticleService articleService = new ArticleServiceImpl(client);
@@ -116,19 +115,13 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void shouldGetBlogAndReviews() throws Exception {
+    public void shouldGetOnlyBlogAndReviews() throws Exception {
 
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.BLOG.toString()))
+        stubFor(get(urlEqualTo("/article?search&page=0&size=1000"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withStatus(200)
-                        .withBody(this.loadResource(ARTICLES_BLOG_JSON))));
-
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.REVIEW.toString()))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withStatus(200)
-                        .withBody(this.loadResource(ARTICLES_REVIEW_JSON))));
+                        .withBody(this.loadResource(ARTICLES_JSON))));
 
         ArticleContainer allArticles = this.articleService.getBlogAndReviews();
 
@@ -155,13 +148,7 @@ public class ArticleServiceTest {
     @Test
     public void shouldReturnEmptyWhenNoResultsFound(){
 
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.BLOG.toString()))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withStatus(200)
-                        .withBody(this.loadResource(NO_ARTICLES_JSON))));
-
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.REVIEW.toString()))
+        stubFor(get(urlEqualTo("/article?search&page=0&size=1000"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withStatus(200)
@@ -181,18 +168,12 @@ public class ArticleServiceTest {
     }
 
     @Test
-    public void shouldThrowInternalServerErrorWhenExceptionResponseFromOne(){
+    public void shouldThrowInternalServerErrorWhenExceptionResponse(){
 
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.BLOG.toString()))
+        stubFor(get(urlEqualTo("/article?search&page=0&size=1000"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withStatus(500)
-                        .withBody(this.loadResource(NO_ARTICLES_JSON))));
-
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.REVIEW.toString()))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withStatus(200)
                         .withBody(this.loadResource(NO_ARTICLES_JSON))));
 
         try{
@@ -206,13 +187,7 @@ public class ArticleServiceTest {
     @Test
     public void shouldThrowInternalServerErrorWhenUnexpectedCodeReturned(){
 
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.BLOG.toString()))
-                .willReturn(aResponse()
-                        .withHeader("Content-Type", "application/json")
-                        .withStatus(302)
-                        .withBody(this.loadResource(NO_ARTICLES_JSON))));
-
-        stubFor(get(urlEqualTo("/article/type/" + ArticleType.REVIEW.toString()))
+        stubFor(get(urlEqualTo("/article?search&page=0&size=1000"))
                 .willReturn(aResponse()
                         .withHeader("Content-Type", "application/json")
                         .withStatus(302)
@@ -233,10 +208,6 @@ public class ArticleServiceTest {
         assertThat(given.getType()).isEqualTo(expected.getType());
         assertThat(given.getId()).isEqualTo(expected.getId());
         assertThat(given.getData()).isEqualTo(expected.getData());
-
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mmZ");
-//        Date date = simpleDateFormat.parse("2016-04-06 21:20");
-//        assertThat(result.getDate()).isEqualTo(date); Ignoring this for the moment, as it has some weird issue where it keeps setting T23 instead of T22... Darn dates.
     }
 
     private String loadResource(String resource) {
