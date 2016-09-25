@@ -1,4 +1,6 @@
 # harrywinser.com
+[![Build Status](https://travis-ci.org/Hazz223/harrywinser.com.svg?branch=master)](https://travis-ci.org/Hazz223/harrywinser.com)
+
 My personal website; rebuilt and fully opensource!
 
 Started to get super annoyed when using VisualStudio.com to host the git repo, so I'm restarting from here.
