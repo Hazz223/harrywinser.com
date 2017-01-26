@@ -24,7 +24,8 @@ Happy reading!
 ## Build / running
 - Ensure you have Java 8 installed
 - Go to the cloned directory, and type in `./gradlew bootRepackage`. This will create a deployable Jar in folder `build/libs`.
-- use `java -jar <insert jar name here>`. This should boot the app locally under port 80. Note, if you're on a Mac or Linux, they
-tend to block port 80. Dive into the `application.properties` to change this. More docs can be found on the Springboot website.
+- use `java -jar <insert jar name here>`. This will boot the app, at the port specified in `src/main/resources/application.properties`
 
-
+## Docker and Raspberry Pi
+You can now boot the application within a Docker container. Just grab the built jar, the application.properties, and put them in the Docker-pi folder. Then use the standard docker commands to build it!
+At the moment, this is designed for Raspberry Pi's, and use the Java images found [here](https://github.com/Hazz223/pi-docker-files).
