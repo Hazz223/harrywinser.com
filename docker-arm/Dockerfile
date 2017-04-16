@@ -1,7 +1,7 @@
 FROM hazz22/pi-openjre
 
 ADD app.jar /usr/src/app.jar
-ADD application.properties /user/src/application.properties
+ADD application.properties /usr/src/application.properties
 
 WORKDIR /usr/src/
 
