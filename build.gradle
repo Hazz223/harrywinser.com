@@ -2,39 +2,65 @@ group 'harry-java'
 version '1.3.0'
 
 apply plugin: 'java'
-apply plugin: 'spring-boot' 
+apply plugin: 'spring-boot'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 buildscript {
-	repositories {
-		mavenCentral()
-	}
-	dependencies {
-		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-	}
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
 }
 
 dependencies {
-	compile "org.springframework.boot:spring-boot-starter-mustache:${springBootVersion}"
-	compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-	compile "com.google.guava:guava:${guavaVersion}"
-	compile "commons-io:commons-io:${commonsVersion}"
+    compile "org.springframework.boot:spring-boot-starter-mustache:${springBootVersion}"
+    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
+    compile "com.google.guava:guava:${guavaVersion}"
+    compile "commons-io:commons-io:${commonsVersion}"
 
-	testCompile "org.springframework.boot:spring-boot-starter-test"
-	testCompile "com.github.tomakehurst:wiremock:${wiremockVersion}"
-	testCompile "org.assertj:assertj-core:${assertJVersion}"
+    testCompile "org.springframework.boot:spring-boot-starter-test"
+    testCompile "com.github.tomakehurst:wiremock:${wiremockVersion}"
+    testCompile "org.assertj:assertj-core:${assertJVersion}"
 }
 
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
 jar {
-	baseName = 'harrywinser-blog'
+    baseName = 'harrywinser-blog'
 }
 
 task wrapper(type: Wrapper) {
-	gradleVersion = '2.12'
+    gradleVersion = '2.12'
+}
+
+build.mustRunAfter clean
+
+task createDockerFolder(type: Copy, group: "docker", dependsOn: ["clean", "build"]) {
+
+    from "src/main/deploy"
+    from("src/main/resources/") {
+        include "application.properties"
+    }
+
+    from("build/libs") {
+        include "*.jar"
+        rename { file ->
+            file = "app.jar"
+        }
+    }
+
+    into 'build/docker/'
+}
+
+task createImage(type: Exec, group: "docker", dependsOn: 'createDockerFolder') {
+
+    workingDir "build/docker"
+
+    commandLine 'docker', 'build', '-t', "hazz22/harrywinser-blog:${project.version}.${new Date().time}", "."
 }
