@@ -54,6 +54,7 @@ public class ArticleServiceImpl implements ArticleService {
 
             List<Article> blogAndReviews = all.getContent().stream()
                     .filter(x -> !x.getType().equals("technology"))
+                    .filter(x -> !x.getType().equals("boat"))
                     .collect(Collectors.toList());
 
             all.setContent(blogAndReviews);
