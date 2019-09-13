@@ -1,39 +1,6 @@
 group 'harry-java'
-version '1.4.0'
+version '2.0.0'
 
-apply plugin: 'java'
-apply plugin: 'spring-boot'
-
-repositories {
-    mavenCentral()
-}
-
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
-}
-
-dependencies {
-    compile "org.springframework.boot:spring-boot-starter-mustache:${springBootVersion}"
-    compile "org.springframework.boot:spring-boot-starter-web:${springBootVersion}"
-    compile "com.google.guava:guava:${guavaVersion}"
-    compile "commons-io:commons-io:${commonsVersion}"
-
-    testCompile "org.springframework.boot:spring-boot-starter-test"
-    testCompile "com.github.tomakehurst:wiremock:${wiremockVersion}"
-    testCompile "org.assertj:assertj-core:${assertJVersion}"
-}
-
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
-
-jar {
-    baseName = 'harrywinser-blog'
-}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '2.12'
