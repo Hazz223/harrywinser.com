@@ -48,7 +48,7 @@ module.exports = {
       ignoreOrder: false, // Enable to remove warnings about conflicting order
     })
   ],
-  entry: './web/index.js',
+  entry: './web/index.jsx',
   output: {
     filename: 'main.js',
     path: path.resolve(__dirname, 'dist')

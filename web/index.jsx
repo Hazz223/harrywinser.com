@@ -1,6 +1,6 @@
 import ReactDOM from "react-dom";
 import React from "react";
-import App from "../web/App.jsx";
+import App from "./App.jsx";
 import '../web/style.css';
 
 
