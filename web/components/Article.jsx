@@ -10,7 +10,8 @@ class Article extends Component {
         return (
             <div className="row">
                 <div className="col-md-12">
-                    I'm an article
+                    <h1>{this.props.article.title}</h1>
+                    <div dangerouslySetInnerHTML={{ __html: this.props.article.data }}></div>
                 </div>
             </div>
         )
